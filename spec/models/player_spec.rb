@@ -3,14 +3,19 @@ require 'rails_helper'
 RSpec.describe Player, type: :model do
 
   describe 'relationships' do
-    let(:player) { Player.create!(name: "Sam") }
-    let(:partner1) { Player.create!(name: "Charlie") }
-    let(:partner2) { Player.create!(name: "Milly") }
+    let(:sam) { Player.create!(name: "Sam") }
+    let(:charlie) { Player.create!(name: "Charlie") }
+    let(:milly) { Player.create!(name: "Milly") }
 
     it 'can have many pairs' do
-      player.pairs << partner1
-      player.pairs << partner2
-      expect(player.pairs.count).to eq(2)
+      sam_and_charlie = Pair.create
+      sam_and_charlie.players << sam
+      sam_and_charlie.players << charlie
+      sam_and_milly = Pair.create
+      sam_and_milly.players << sam
+      sam_and_milly.players << milly
+
+      expect(sam.pairs.count).to eq(2)
     end
 
     xit 'has many partners via pairing' do
