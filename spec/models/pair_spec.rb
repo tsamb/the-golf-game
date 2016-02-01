@@ -26,7 +26,7 @@ RSpec.describe Pair, type: :model do
     end
 
     it 'cannot have more than two players' do
-      sam_and_immy.players << charlie
+      sam_and_immy.pairings.create(player: charlie)
       expect(sam_and_immy.players.count).to eq(2)
     end
   end
