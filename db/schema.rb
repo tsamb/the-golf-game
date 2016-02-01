@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131110821) do
+ActiveRecord::Schema.define(version: 20160131113450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "courses", force: :cascade do |t|
+    t.string   "name"
+    t.string   "city"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "foursomes", force: :cascade do |t|
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "foursomes", ["round_id"], name: "index_foursomes_on_round_id", using: :btree
+
+  create_table "pair_groupings", force: :cascade do |t|
+    t.integer  "pair_id"
+    t.integer  "foursome_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "pair_groupings", ["foursome_id"], name: "index_pair_groupings_on_foursome_id", using: :btree
+  add_index "pair_groupings", ["pair_id"], name: "index_pair_groupings_on_pair_id", using: :btree
 
   create_table "pairings", force: :cascade do |t|
     t.integer  "pair_id"
@@ -38,6 +63,19 @@ ActiveRecord::Schema.define(version: 20160131110821) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rounds", force: :cascade do |t|
+    t.integer  "course_id"
+    t.date     "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "rounds", ["course_id"], name: "index_rounds_on_course_id", using: :btree
+
+  add_foreign_key "foursomes", "rounds"
+  add_foreign_key "pair_groupings", "foursomes"
+  add_foreign_key "pair_groupings", "pairs"
   add_foreign_key "pairings", "pairs"
   add_foreign_key "pairings", "players"
+  add_foreign_key "rounds", "courses"
 end
