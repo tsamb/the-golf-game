@@ -42,7 +42,7 @@ RSpec.describe Foursome, type: :model do
     end
 
     it 'cannot have more than 2 pairs' do
-      awesome_foursome.pairs << di_and_paddy
+      awesome_foursome.pair_groupings.create(pair: di_and_paddy)
       expect(awesome_foursome.pairs.count).to eq(2)
     end
   end
