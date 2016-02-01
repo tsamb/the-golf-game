@@ -29,5 +29,12 @@ RSpec.describe Pair, type: :model do
       sam_and_immy.pairings.create(player: charlie)
       expect(sam_and_immy.players.count).to eq(2)
     end
+
+    it 'cannot have a player pairing with her/himself' do
+      pair = Pair.create
+      pair.pairings.create(player: sam)
+      pair.pairings.build(player: sam)
+      expect(pair.save).to be_falsey
+    end
   end
 end
