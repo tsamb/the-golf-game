@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201035348) do
+ActiveRecord::Schema.define(version: 20160201035941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,18 @@ ActiveRecord::Schema.define(version: 20160201035348) do
 
   add_index "rounds", ["course_id"], name: "index_rounds_on_course_id", using: :btree
 
+  create_table "won_holes", force: :cascade do |t|
+    t.integer  "hole_id"
+    t.integer  "pair_id"
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "won_holes", ["hole_id"], name: "index_won_holes_on_hole_id", using: :btree
+  add_index "won_holes", ["pair_id"], name: "index_won_holes_on_pair_id", using: :btree
+  add_index "won_holes", ["round_id"], name: "index_won_holes_on_round_id", using: :btree
+
   add_foreign_key "foursomes", "rounds"
   add_foreign_key "holes", "courses"
   add_foreign_key "pair_groupings", "foursomes"
@@ -89,4 +101,7 @@ ActiveRecord::Schema.define(version: 20160201035348) do
   add_foreign_key "pairings", "pairs"
   add_foreign_key "pairings", "players"
   add_foreign_key "rounds", "courses"
+  add_foreign_key "won_holes", "holes"
+  add_foreign_key "won_holes", "pairs"
+  add_foreign_key "won_holes", "rounds"
 end
