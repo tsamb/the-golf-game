@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20160201035941) do
   create_table "holes", force: :cascade do |t|
     t.integer  "number"
     t.integer  "par"
+    t.integer  "stroke"
     t.integer  "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
