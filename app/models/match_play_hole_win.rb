@@ -1,4 +1,4 @@
-class WonHole < ActiveRecord::Base
+class MatchPlayHoleWin < ActiveRecord::Base
   belongs_to :hole
   belongs_to :pair
   belongs_to :round

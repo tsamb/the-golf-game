@@ -41,6 +41,18 @@ ActiveRecord::Schema.define(version: 20160201035941) do
 
   add_index "holes", ["course_id"], name: "index_holes_on_course_id", using: :btree
 
+  create_table "match_play_hole_wins", force: :cascade do |t|
+    t.integer  "hole_id"
+    t.integer  "pair_id"
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "match_play_hole_wins", ["hole_id"], name: "index_match_play_hole_wins_on_hole_id", using: :btree
+  add_index "match_play_hole_wins", ["pair_id"], name: "index_match_play_hole_wins_on_pair_id", using: :btree
+  add_index "match_play_hole_wins", ["round_id"], name: "index_match_play_hole_wins_on_round_id", using: :btree
+
   create_table "pair_groupings", force: :cascade do |t|
     t.integer  "pair_id"
     t.integer  "foursome_id"
@@ -82,26 +94,14 @@ ActiveRecord::Schema.define(version: 20160201035941) do
 
   add_index "rounds", ["course_id"], name: "index_rounds_on_course_id", using: :btree
 
-  create_table "won_holes", force: :cascade do |t|
-    t.integer  "hole_id"
-    t.integer  "pair_id"
-    t.integer  "round_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "won_holes", ["hole_id"], name: "index_won_holes_on_hole_id", using: :btree
-  add_index "won_holes", ["pair_id"], name: "index_won_holes_on_pair_id", using: :btree
-  add_index "won_holes", ["round_id"], name: "index_won_holes_on_round_id", using: :btree
-
   add_foreign_key "foursomes", "rounds"
   add_foreign_key "holes", "courses"
+  add_foreign_key "match_play_hole_wins", "holes"
+  add_foreign_key "match_play_hole_wins", "pairs"
+  add_foreign_key "match_play_hole_wins", "rounds"
   add_foreign_key "pair_groupings", "foursomes"
   add_foreign_key "pair_groupings", "pairs"
   add_foreign_key "pairings", "pairs"
   add_foreign_key "pairings", "players"
   add_foreign_key "rounds", "courses"
-  add_foreign_key "won_holes", "holes"
-  add_foreign_key "won_holes", "pairs"
-  add_foreign_key "won_holes", "rounds"
 end
